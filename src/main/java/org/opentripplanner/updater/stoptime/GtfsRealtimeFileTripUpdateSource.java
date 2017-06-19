@@ -62,24 +62,22 @@ public class GtfsRealtimeFileTripUpdateSource implements TripUpdateSource, JsonC
         fullDataset = true;
         try {
             InputStream is = new FileInputStream(file);
-            if (is != null) {
-                // Decode message
-                feedMessage = FeedMessage.PARSER.parseFrom(is);
-                feedEntityList = feedMessage.getEntityList();
-                
-                // Change fullDataset value if this is an incremental update
-                if (feedMessage.hasHeader()
-                        && feedMessage.getHeader().hasIncrementality()
-                        && feedMessage.getHeader().getIncrementality()
-                                .equals(GtfsRealtime.FeedHeader.Incrementality.DIFFERENTIAL)) {
-                    fullDataset = false;
-                }
-                
-                // Create List of TripUpdates
-                updates = new ArrayList<TripUpdate>(feedEntityList.size());
-                for (FeedEntity feedEntity : feedEntityList) {
-                    if (feedEntity.hasTripUpdate()) updates.add(feedEntity.getTripUpdate());
-                }
+            // Decode message
+            feedMessage = FeedMessage.PARSER.parseFrom(is);
+            feedEntityList = feedMessage.getEntityList();
+
+            // Change fullDataset value if this is an incremental update
+            if (feedMessage.hasHeader()
+                    && feedMessage.getHeader().hasIncrementality()
+                    && feedMessage.getHeader().getIncrementality()
+                            .equals(GtfsRealtime.FeedHeader.Incrementality.DIFFERENTIAL)) {
+                fullDataset = false;
+            }
+
+            // Create List of TripUpdates
+            updates = new ArrayList<TripUpdate>(feedEntityList.size());
+            for (FeedEntity feedEntity : feedEntityList) {
+                if (feedEntity.hasTripUpdate()) updates.add(feedEntity.getTripUpdate());
             }
         } catch (Exception e) {
             LOG.warn("Failed to parse gtfs-rt feed at " + file + ":", e);
