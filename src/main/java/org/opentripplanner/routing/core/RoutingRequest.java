@@ -894,66 +894,67 @@ public class RoutingRequest implements Cloneable, Serializable {
                 endpointsMatch = from.equals(other.from);
             }
         } else {
-            endpointsMatch = ((from == null && other.from == null) || from.equals(other.from))
-                    && ((to == null && other.to == null) || to.equals(other.to));
+            endpointsMatch = ((from == null && other.from == null) || from.equals(other.from));
+            endpointsMatch = endpointsMatch && ((to == null && other.to == null) || to.equals(other.to));
         }
-        return endpointsMatch
-                && dateTime == other.dateTime
-                && arriveBy == other.arriveBy
-                && numItineraries == other.numItineraries // should only apply in non-batch?
-                && walkSpeed == other.walkSpeed
-                && bikeSpeed == other.bikeSpeed
-                && carSpeed == other.carSpeed
-                && maxWeight == other.maxWeight
-                && worstTime == other.worstTime
-                && maxTransfers == other.maxTransfers
-                && modes.equals(other.modes)
-                && wheelchairAccessible == other.wheelchairAccessible
-                && optimize.equals(other.optimize)
-                && maxWalkDistance == other.maxWalkDistance
-                && maxTransferWalkDistance == other.maxTransferWalkDistance
-                && maxPreTransitTime == other.maxPreTransitTime
-                && transferPenalty == other.transferPenalty
-                && maxSlope == other.maxSlope
-                && walkReluctance == other.walkReluctance
-                && waitReluctance == other.waitReluctance
-                && waitAtBeginningFactor == other.waitAtBeginningFactor
-                && walkBoardCost == other.walkBoardCost
-                && bikeBoardCost == other.bikeBoardCost
-                && bannedRoutes.equals(other.bannedRoutes)
-                && bannedTrips.equals(other.bannedTrips)
-                && preferredRoutes.equals(other.preferredRoutes)
-                && unpreferredRoutes.equals(other.unpreferredRoutes)
-                && transferSlack == other.transferSlack
-                && boardSlack == other.boardSlack
-                && alightSlack == other.alightSlack
-                && nonpreferredTransferPenalty == other.nonpreferredTransferPenalty
-                && otherThanPreferredRoutesPenalty == other.otherThanPreferredRoutesPenalty
-                && useUnpreferredRoutesPenalty == other.useUnpreferredRoutesPenalty
-                && triangleSafetyFactor == other.triangleSafetyFactor
-                && triangleSlopeFactor == other.triangleSlopeFactor
-                && triangleTimeFactor == other.triangleTimeFactor
-                && stairsReluctance == other.stairsReluctance
-                && elevatorBoardTime == other.elevatorBoardTime
-                && elevatorBoardCost == other.elevatorBoardCost
-                && elevatorHopTime == other.elevatorHopTime
-                && elevatorHopCost == other.elevatorHopCost
-                && bikeSwitchTime == other.bikeSwitchTime
-                && bikeSwitchCost == other.bikeSwitchCost
-                && bikeRentalPickupTime == other.bikeRentalPickupTime
-                && bikeRentalPickupCost == other.bikeRentalPickupCost
-                && bikeRentalDropoffTime == other.bikeRentalDropoffTime
-                && bikeRentalDropoffCost == other.bikeRentalDropoffCost
-                && useBikeRentalAvailabilityInformation == other.useBikeRentalAvailabilityInformation
-                && extensions.equals(other.extensions)
-                && clampInitialWait == other.clampInitialWait
-                && reverseOptimizeOnTheFly == other.reverseOptimizeOnTheFly
-                && ignoreRealtimeUpdates == other.ignoreRealtimeUpdates
-                && disableRemainingWeightHeuristic == other.disableRemainingWeightHeuristic
-                && Objects.equal(startingTransitTripId, other.startingTransitTripId)
-                && useTraffic == other.useTraffic
-                && disableAlertFiltering == other.disableAlertFiltering
-                && geoidElevation == other.geoidElevation;
+        
+        endpointsMatch = endpointsMatch && dateTime == other.dateTime;
+        endpointsMatch = endpointsMatch && arriveBy == other.arriveBy;
+        endpointsMatch = endpointsMatch && numItineraries == other.numItineraries; // should only apply in non-batch?
+        endpointsMatch = endpointsMatch && walkSpeed == other.walkSpeed;
+        endpointsMatch = endpointsMatch && bikeSpeed == other.bikeSpeed;
+        endpointsMatch = endpointsMatch && carSpeed == other.carSpeed;
+        endpointsMatch = endpointsMatch && maxWeight == other.maxWeight;
+        endpointsMatch = endpointsMatch && worstTime == other.worstTime;
+        endpointsMatch = endpointsMatch && maxTransfers == other.maxTransfers;
+        endpointsMatch = endpointsMatch && modes.equals(other.modes);
+        endpointsMatch = endpointsMatch && wheelchairAccessible == other.wheelchairAccessible;
+        endpointsMatch = endpointsMatch && optimize.equals(other.optimize);
+        endpointsMatch = endpointsMatch && maxWalkDistance == other.maxWalkDistance;
+        endpointsMatch = endpointsMatch && maxTransferWalkDistance == other.maxTransferWalkDistance;
+        endpointsMatch = endpointsMatch && maxPreTransitTime == other.maxPreTransitTime;
+        endpointsMatch = endpointsMatch && transferPenalty == other.transferPenalty;
+        endpointsMatch = endpointsMatch && maxSlope == other.maxSlope;
+        endpointsMatch = endpointsMatch && walkReluctance == other.walkReluctance;
+        endpointsMatch = endpointsMatch && waitReluctance == other.waitReluctance;
+        endpointsMatch = endpointsMatch && waitAtBeginningFactor == other.waitAtBeginningFactor;
+        endpointsMatch = endpointsMatch && walkBoardCost == other.walkBoardCost;
+        endpointsMatch = endpointsMatch && bikeBoardCost == other.bikeBoardCost;
+        endpointsMatch = endpointsMatch && bannedRoutes.equals(other.bannedRoutes);
+        endpointsMatch = endpointsMatch && bannedTrips.equals(other.bannedTrips);
+        endpointsMatch = endpointsMatch && preferredRoutes.equals(other.preferredRoutes);
+        endpointsMatch = endpointsMatch && unpreferredRoutes.equals(other.unpreferredRoutes);
+        endpointsMatch = endpointsMatch && transferSlack == other.transferSlack;
+        endpointsMatch = endpointsMatch && boardSlack == other.boardSlack;
+        endpointsMatch = endpointsMatch && alightSlack == other.alightSlack;
+        endpointsMatch = endpointsMatch && nonpreferredTransferPenalty == other.nonpreferredTransferPenalty;
+        endpointsMatch = endpointsMatch && otherThanPreferredRoutesPenalty == other.otherThanPreferredRoutesPenalty;
+        endpointsMatch = endpointsMatch && useUnpreferredRoutesPenalty == other.useUnpreferredRoutesPenalty;
+        endpointsMatch = endpointsMatch && triangleSafetyFactor == other.triangleSafetyFactor;
+        endpointsMatch = endpointsMatch && triangleSlopeFactor == other.triangleSlopeFactor;
+        endpointsMatch = endpointsMatch && triangleTimeFactor == other.triangleTimeFactor;
+        endpointsMatch = endpointsMatch && stairsReluctance == other.stairsReluctance;
+        endpointsMatch = endpointsMatch && elevatorBoardTime == other.elevatorBoardTime;
+        endpointsMatch = endpointsMatch && elevatorBoardCost == other.elevatorBoardCost;
+        endpointsMatch = endpointsMatch && elevatorHopTime == other.elevatorHopTime;
+        endpointsMatch = endpointsMatch && elevatorHopCost == other.elevatorHopCost;
+        endpointsMatch = endpointsMatch && bikeSwitchTime == other.bikeSwitchTime;
+        endpointsMatch = endpointsMatch && bikeSwitchCost == other.bikeSwitchCost;
+        endpointsMatch = endpointsMatch && bikeRentalPickupTime == other.bikeRentalPickupTime;
+        endpointsMatch = endpointsMatch && bikeRentalPickupCost == other.bikeRentalPickupCost;
+        endpointsMatch = endpointsMatch && bikeRentalDropoffTime == other.bikeRentalDropoffTime;
+        endpointsMatch = endpointsMatch && bikeRentalDropoffCost == other.bikeRentalDropoffCost;
+        endpointsMatch = endpointsMatch && useBikeRentalAvailabilityInformation == other.useBikeRentalAvailabilityInformation;
+        endpointsMatch = endpointsMatch && extensions.equals(other.extensions);
+        endpointsMatch = endpointsMatch && clampInitialWait == other.clampInitialWait;
+        endpointsMatch = endpointsMatch && reverseOptimizeOnTheFly == other.reverseOptimizeOnTheFly;
+        endpointsMatch = endpointsMatch && ignoreRealtimeUpdates == other.ignoreRealtimeUpdates;
+        endpointsMatch = endpointsMatch && disableRemainingWeightHeuristic == other.disableRemainingWeightHeuristic;
+        endpointsMatch = endpointsMatch && Objects.equal(startingTransitTripId, other.startingTransitTripId);
+        endpointsMatch = endpointsMatch && useTraffic == other.useTraffic;
+        endpointsMatch = endpointsMatch && disableAlertFiltering == other.disableAlertFiltering;
+        endpointsMatch = endpointsMatch && geoidElevation == other.geoidElevation;;
+        return endpointsMatch;
     }
 
     /**
