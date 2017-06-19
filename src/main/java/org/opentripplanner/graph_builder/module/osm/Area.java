@@ -42,7 +42,7 @@ class Area {
     // This is the way or relation that has the relevant tags for the area
     OSMWithTags parent;
 
-    List<Ring> outermostRings = new ArrayList<Ring>();
+    List<Ring> outermostRings = new ArrayList<>();
 
     private MultiPolygon jtsMultiPolygon;
 
@@ -55,11 +55,11 @@ class Area {
         if (innerRingNodes == null || outerRingNodes == null) {
             throw new AreaConstructionException();
         }
-        ArrayList<List<Long>> allRings = new ArrayList<List<Long>>(innerRingNodes);
+        ArrayList<List<Long>> allRings = new ArrayList<>(innerRingNodes);
         allRings.addAll(outerRingNodes);
 
-        List<Ring> innerRings = new ArrayList<Ring>();
-        List<Ring> outerRings = new ArrayList<Ring>();
+        List<Ring> innerRings = new ArrayList<>();
+        List<Ring> outerRings = new ArrayList<>();
         for (List<Long> ring : innerRingNodes) {
             innerRings.add(new Ring(ring, _nodes));
         }
@@ -92,7 +92,7 @@ class Area {
 
     public MultiPolygon toJTSMultiPolygon() {
         if (jtsMultiPolygon == null) {
-            List<Polygon> polygons = new ArrayList<Polygon>();
+            List<Polygon> polygons = new ArrayList<>();
             for (Ring ring : outermostRings) {
                 polygons.add(ring.toJtsPolygon());
             }
@@ -112,7 +112,7 @@ class Area {
             return Collections.emptyList();
         }
 
-        List<List<Long>> closedRings = new ArrayList<List<Long>>();
+        List<List<Long>> closedRings = new ArrayList<>();
 
         ArrayListMultimap<Long, OSMWay> waysByEndpoint = ArrayListMultimap.create();
         for (OSMWay way : ways) {
@@ -121,7 +121,7 @@ class Area {
             long start = refs.get(0);
             long end = refs.get(refs.size() - 1);
             if (start == end) {
-                ArrayList<Long> ring = new ArrayList<Long>(refs);
+                ArrayList<Long> ring = new ArrayList<>(refs);
                 closedRings.add(ring);
             } else {
                 waysByEndpoint.put(start, way);
@@ -130,7 +130,7 @@ class Area {
         }
 
         // precheck for impossible situations
-        List<Long> toRemove = new ArrayList<Long>();
+        List<Long> toRemove = new ArrayList<>();
         for (Long endpoint : waysByEndpoint.keySet()) {
             Collection<OSMWay> list = waysByEndpoint.get(endpoint);
             if (list.size() % 2 == 1) {
@@ -141,7 +141,7 @@ class Area {
             waysByEndpoint.removeAll(key);
         }
 
-        List<Long> partialRing = new ArrayList<Long>();
+        List<Long> partialRing = new ArrayList<>();
         if (waysByEndpoint.size() == 0) {
             return closedRings;
         }
@@ -169,7 +169,7 @@ class Area {
     private boolean constructRingsRecursive(ArrayListMultimap<Long, OSMWay> waysByEndpoint,
             List<Long> ring, List<List<Long>> closedRings, long endpoint) {
 
-        List<OSMWay> ways = new ArrayList<OSMWay>(waysByEndpoint.get(endpoint));
+        List<OSMWay> ways = new ArrayList<>(waysByEndpoint.get(endpoint));
 
         for (OSMWay way : ways) {
             // remove this way from the map
@@ -180,7 +180,7 @@ class Area {
             waysByEndpoint.remove(firstEndpoint, way);
             waysByEndpoint.remove(otherEndpoint, way);
 
-            ArrayList<Long> newRing = new ArrayList<Long>(ring.size() + nodeRefs.size());
+            ArrayList<Long> newRing = new ArrayList<>(ring.size() + nodeRefs.size());
             long newFirstEndpoint;
             if (firstEndpoint == endpoint) {
                 for (int j = nodeRefs.size() - 1; j >= 1; --j) {
@@ -202,7 +202,7 @@ class Area {
                 }
 
                 // otherwise, we need to start a new partial ring
-                newRing = new ArrayList<Long>();
+                newRing = new ArrayList<>();
                 OSMWay firstWay = null;
                 for (Long entry : waysByEndpoint.keySet()) {
                     List<OSMWay> list = waysByEndpoint.get(entry);
