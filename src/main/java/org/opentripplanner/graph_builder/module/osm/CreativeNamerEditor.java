@@ -18,18 +18,22 @@ import java.beans.PropertyEditorSupport;
 public class CreativeNamerEditor extends PropertyEditorSupport {
     private CreativeNamer value;
 
+    @Override
     public void setAsText(String pattern) {
         value = new CreativeNamer(pattern);
     }
 
+    @Override
     public String getAsText() {
         return value.getCreativeNamePattern();
     }
 
+    @Override
     public Object getValue() {
         return value;
     }
 
+    @Override
     public void setValue(Object object) {
         value = (CreativeNamer) object;
     }
