@@ -21,8 +21,34 @@ import junit.framework.TestCase;
 
 public class TestMessages extends TestCase {
 
-    public void testLanguages() {
+    public void testLanguagesDefaultLocale() {
+        // Force default to make test work on non-US machines
+        Locale.setDefault(new Locale("en", "US"));
 
+        String e = Message.GEOCODE_FROM_AMBIGUOUS.get();
+
+        TestCase.assertNotNull(e);
+    }
+
+    public void testLanguagesEnumLocale() {
+        // Force default to make test work on non-US machines
+        Locale.setDefault(new Locale("en", "US"));
+
+        String f = Message.GEOCODE_FROM_AMBIGUOUS.get(Locale.CANADA_FRENCH);
+
+        TestCase.assertNotNull(f);
+    }
+
+    public void testLanguagesNewLocale() {
+        // Force default to make test work on non-US machines
+        Locale.setDefault(new Locale("en", "US"));
+
+        String s = Message.GEOCODE_FROM_AMBIGUOUS.get(new Locale("es"));
+
+        TestCase.assertNotNull(s);
+    }
+
+    public void testLanguagesNotSame(){
         // Force default to make test work on non-US machines
         Locale.setDefault(new Locale("en", "US"));
 
@@ -30,9 +56,6 @@ public class TestMessages extends TestCase {
         String f = Message.GEOCODE_FROM_AMBIGUOUS.get(Locale.CANADA_FRENCH);
         String s = Message.GEOCODE_FROM_AMBIGUOUS.get(new Locale("es"));
 
-        TestCase.assertNotNull(e);
-        TestCase.assertNotNull(f);
-        TestCase.assertNotNull(s);
         TestCase.assertNotSame(e, f);
         TestCase.assertNotSame(e, s);
         TestCase.assertNotSame(f, s);
