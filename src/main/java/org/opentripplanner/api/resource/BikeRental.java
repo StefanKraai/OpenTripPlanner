@@ -28,6 +28,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.opentripplanner.util.model.EnvelopeUtil;
 import org.opentripplanner.routing.bike_rental.BikeRentalStation;
 import org.opentripplanner.routing.bike_rental.BikeRentalStationService;
 import org.opentripplanner.standalone.OTPServer;
@@ -59,7 +60,7 @@ public class BikeRental {
         if (bikeRentalService == null) return new BikeRentalStationList();
         Envelope envelope;
         if (lowerLeft != null) {
-            envelope = getEnvelope(lowerLeft, upperRight);
+            envelope = EnvelopeUtil.getEnvelope(lowerLeft, upperRight);
         } else {
             envelope = new Envelope(-180,180,-90,90); 
         }
@@ -76,16 +77,4 @@ public class BikeRental {
         brsl.stations = out;
         return brsl;
     }
-
-    /** Envelopes are in latitude, longitude format */
-    public static Envelope getEnvelope(String lowerLeft, String upperRight) {
-        String[] lowerLeftParts = lowerLeft.split(",");
-        String[] upperRightParts = upperRight.split(",");
-
-        Envelope envelope = new Envelope(Double.parseDouble(lowerLeftParts[1]),
-                Double.parseDouble(upperRightParts[1]), Double.parseDouble(lowerLeftParts[0]),
-                Double.parseDouble(upperRightParts[0]));
-        return envelope;
-    }
-
 }
