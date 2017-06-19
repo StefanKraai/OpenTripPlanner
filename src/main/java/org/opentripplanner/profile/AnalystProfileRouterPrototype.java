@@ -53,17 +53,20 @@ public class AnalystProfileRouterPrototype {
     public final Map<Vertex, TimeRange> propagatedTimes = Maps.newHashMap(); // the travel times propagated onto the street network
     // TODO propagate times from the origin point without transit.
 
-    public AnalystProfileRouterPrototype(Graph graph, ProfileRequest request) {
-        this.graph = graph;
-        this.request = request;
-    }
-
     /* Search state */
     Multimap<StopCluster, StopAtDistance> fromStopPaths, toStopPaths; // ways to reach each origin or dest stop cluster
     List<RoutingContext> routingContexts = Lists.newArrayList();
 
     TObjectIntMap<Stop> fromStops;
     TimeWindow window; // filters trips used by time of day and service schedule
+
+    long searchBeginTime;
+    long abortTime;
+
+    public AnalystProfileRouterPrototype(Graph graph, ProfileRequest request) {
+        this.graph = graph;
+        this.request = request;
+    }
 
     /** Return a set of all patterns that pass through the stops that are present in the given Tracker. */
     public Set<TripPattern> uniquePatternsVisiting(Set<Stop> stops) {
@@ -75,9 +78,6 @@ public class AnalystProfileRouterPrototype {
         }
         return patterns;
     }
-
-    long searchBeginTime;
-    long abortTime;
 
     private void checkTimeout() {
         if (System.currentTimeMillis() > abortTime) {
