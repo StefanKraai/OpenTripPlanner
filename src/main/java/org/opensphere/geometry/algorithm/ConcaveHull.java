@@ -112,7 +112,7 @@ public class ConcaveHull {
 
 	/**
 	 * Transform into GeometryCollection.
-	 * 
+	 *
 	 * @param geom
 	 * 		input geometry
 	 * @return
@@ -122,39 +122,15 @@ public class ConcaveHull {
 		UniqueCoordinateArrayFilter filter = new UniqueCoordinateArrayFilter();
 		geom.apply(filter);
 		Coordinate[] coord = filter.getCoordinates();
-		
+
 		Geometry[] geometries = new Geometry[coord.length];
 		for (int i = 0 ; i < coord.length ; i++) {
 			Coordinate[] c = new Coordinate[] { coord[i] };
 			CoordinateArraySequence cs = new CoordinateArraySequence(c);
 			geometries[i] = new Point(cs, geom.getFactory());
 		}
-		
-		return new GeometryCollection(geometries, geom.getFactory());
-	}
 
-	
-	/**
-	 * Transform into GeometryCollection.
-	 * 
-	 * @param geom
-	 * 		input geometry
-	 * @return
-	 * 		a geometry collection
-	 */
-	private static GeometryCollection transformIntoPointGeometryCollection(GeometryCollection gc) {
-		UniqueCoordinateArrayFilter filter = new UniqueCoordinateArrayFilter();
-		gc.apply(filter);
-		Coordinate[] coord = filter.getCoordinates();
-		
-		Geometry[] geometries = new Geometry[coord.length];
-		for (int i = 0 ; i < coord.length ; i++) {
-			Coordinate[] c = new Coordinate[] { coord[i] };
-			CoordinateArraySequence cs = new CoordinateArraySequence(c);
-			geometries[i] = new Point(cs, gc.getFactory());
-		}
-		
-		return new GeometryCollection(geometries, gc.getFactory());
+		return new GeometryCollection(geometries, geom.getFactory());
 	}
 
 	
